@@ -9,7 +9,9 @@ Class-weighted loss handles the imbalance; the best epoch is picked on the
 validation macro-F1 and only then evaluated once on the test split.
 """
 import argparse
+import dataclasses
 import json
+import math
 import os
 
 import numpy as np
@@ -56,18 +58,23 @@ def compute_metrics(eval_pred):
             "macro_f1": f1_score(labels, preds, average="macro")}
 
 
-def make_args(out_dir, a):
+def make_args(out_dir, a, n_train):
+    """Build TrainingArguments that work across transformers 4.x and 5.x."""
+    names = {f.name for f in dataclasses.fields(TrainingArguments)}
+    steps_per_epoch = math.ceil(n_train / a.batch_size)
     kw = dict(output_dir=os.path.join(out_dir, "checkpoints"), num_train_epochs=a.epochs,
               per_device_train_batch_size=a.batch_size, per_device_eval_batch_size=64,
-              learning_rate=a.lr, weight_decay=0.01, warmup_ratio=0.1,
+              learning_rate=a.lr, weight_decay=0.01,
+              warmup_steps=int(0.1 * steps_per_epoch * a.epochs),   # ~10% warm-up
               save_strategy="epoch", load_best_model_at_end=True,
               metric_for_best_model="macro_f1", greater_is_better=True,
               save_total_limit=1, fp16=torch.cuda.is_available(), seed=a.seed,
               report_to="none", logging_steps=25)
-    try:
-        return TrainingArguments(eval_strategy="epoch", **kw)
-    except TypeError:  # older transformers versions
-        return TrainingArguments(evaluation_strategy="epoch", **kw)
+    kw["eval_strategy" if "eval_strategy" in names else "evaluation_strategy"] = "epoch"
+    dropped = [k for k in kw if k not in names]
+    if dropped:
+        print("WARNING: this transformers version does not support:", dropped)
+    return TrainingArguments(**{k: v for k, v in kw.items() if k in names})
 
 
 def main():
@@ -104,14 +111,11 @@ def main():
     ds = {n: TextDataset(d["text"], d["y"], tok, a.max_len)
           for n, d in [("train", tr), ("val", va), ("test", te)]}
     trainer = WeightedTrainer(
-        model=model, args=make_args(a.out_dir, a), train_dataset=ds["train"],
+        model=model, args=make_args(a.out_dir, a, len(tr)), train_dataset=ds["train"],
         eval_dataset=ds["val"], data_collator=DataCollatorWithPadding(tok),
         compute_metrics=compute_metrics, class_weights=weights,
+        processing_class=tok,
         callbacks=[EarlyStoppingCallback(early_stopping_patience=2)])
-    try:
-        trainer.processing_class = tok
-    except Exception:
-        pass
     trainer.train()
 
     pred = trainer.predict(ds["test"])
