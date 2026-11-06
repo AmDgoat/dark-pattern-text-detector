@@ -1,0 +1,152 @@
+{
+  "model": "distilbert-base-uncased",
+  "labels": [
+    "Benign",
+    "Misdirection",
+    "Other",
+    "Scarcity",
+    "Social Proof",
+    "Urgency"
+  ],
+  "test_accuracy": 0.9533527696793003,
+  "test_macro_f1": 0.8995635151091569,
+  "binary_accuracy": 0.9650145772594753,
+  "binary_f1_dark": 0.9631901840490797,
+  "category_report": {
+    "Benign": {
+      "precision": 0.9560439560439561,
+      "recall": 0.9775280898876404,
+      "f1-score": 0.9666666666666667,
+      "support": 178.0
+    },
+    "Misdirection": {
+      "precision": 0.8285714285714286,
+      "recall": 0.8285714285714286,
+      "f1-score": 0.8285714285714286,
+      "support": 35.0
+    },
+    "Other": {
+      "precision": 0.75,
+      "recall": 0.6,
+      "f1-score": 0.6666666666666666,
+      "support": 5.0
+    },
+    "Scarcity": {
+      "precision": 1.0,
+      "recall": 0.9583333333333334,
+      "f1-score": 0.9787234042553191,
+      "support": 48.0
+    },
+    "Social Proof": {
+      "precision": 0.9782608695652174,
+      "recall": 1.0,
+      "f1-score": 0.989010989010989,
+      "support": 45.0
+    },
+    "Urgency": {
+      "precision": 1.0,
+      "recall": 0.9375,
+      "f1-score": 0.967741935483871,
+      "support": 32.0
+    },
+    "accuracy": 0.9533527696793003,
+    "macro avg": {
+      "precision": 0.9188127090301004,
+      "recall": 0.8836554752987338,
+      "f1-score": 0.8995635151091569,
+      "support": 343.0
+    },
+    "weighted avg": {
+      "precision": 0.9531998930211633,
+      "recall": 0.9533527696793003,
+      "f1-score": 0.9529211657295444,
+      "support": 343.0
+    }
+  },
+  "binary_report": {
+    "Not dark": {
+      "precision": 0.9560439560439561,
+      "recall": 0.9775280898876404,
+      "f1-score": 0.9666666666666667,
+      "support": 178.0
+    },
+    "Dark": {
+      "precision": 0.9751552795031055,
+      "recall": 0.9515151515151515,
+      "f1-score": 0.9631901840490797,
+      "support": 165.0
+    },
+    "accuracy": 0.9650145772594753,
+    "macro avg": {
+      "precision": 0.9655996177735309,
+      "recall": 0.964521620701396,
+      "f1-score": 0.9649284253578732,
+      "support": 343.0
+    },
+    "weighted avg": {
+      "precision": 0.9652374498362584,
+      "recall": 0.9650145772594753,
+      "f1-score": 0.9649943062238041,
+      "support": 343.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      174,
+      4,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      5,
+      29,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      2,
+      0,
+      3,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0,
+      46,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      45,
+      0
+    ],
+    [
+      0,
+      2,
+      0,
+      0,
+      0,
+      30
+    ]
+  ],
+  "hyperparameters": {
+    "model_name": "distilbert-base-uncased",
+    "out_dir": "/content/dp_model",
+    "epochs": 6,
+    "batch_size": 32,
+    "lr": 3e-05,
+    "max_len": 128,
+    "seed": 42
+  }
+}
