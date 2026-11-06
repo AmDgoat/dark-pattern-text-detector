@@ -1,0 +1,28 @@
+rows: 2356 -> 2254 after cleaning/dedup
+
+train: 1617 rows
+category
+Benign          854
+Scarcity        253
+Social Proof    223
+Urgency         143
+Misdirection    114
+Other            30
+
+val: 294 rows
+category
+Benign          131
+Scarcity         48
+Social Proof     44
+Misdirection     33
+Urgency          30
+Other             8
+
+test: 343 rows
+category
+Benign          178
+Scarcity         48
+Social Proof     45
+Misdirection     35
+Urgency          32
+Other             5
