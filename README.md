@@ -7,7 +7,7 @@ segment with a fine-tuned DistilBERT model, and highlights dark patterns by cate
 ## Status
 - [x] Phase 1: data preparation (cleaning, label mapping, page-grouped split)
 - [x] Phase 2: TF-IDF + Logistic Regression baseline
-- [ ] Phase 3: DistilBERT fine-tuning (Colab)
+- [ ] Phase 3: DistilBERT fine-tuning (Colab) – notebook ready: `notebooks/train_distilbert_colab.ipynb`
 - [ ] Phase 4: Manifest V3 extension
 - [ ] Phase 5: testing on real shopping sites
 

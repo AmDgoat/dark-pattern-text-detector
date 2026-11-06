@@ -1,3 +1,6 @@
 pandas
+transformers
+torch
+accelerate
 scikit-learn
 numpy
