@@ -8,10 +8,23 @@ segment with a fine-tuned DistilBERT model, and highlights dark patterns by cate
 - [x] Phase 1: data preparation (cleaning, label mapping, page-grouped split)
 - [x] Phase 2: TF-IDF + Logistic Regression baseline
 - [ ] Phase 3: DistilBERT fine-tuning (Colab) – notebook ready: `notebooks/train_distilbert_colab.ipynb`
-- [ ] Phase 4: Manifest V3 extension
+- [~] Phase 4: local server + Manifest V3 extension (built; being tested in Chrome)
 - [ ] Phase 5: testing on real shopping sites
 
-## Quick start
+## Run the detector (Windows)
+1. `pip install -r requirements.txt`
+2. Put the trained model folder at `models/final/` (kept out of Git; ~250 MB).
+3. Start the server: double-click `start_server.bat` (or `python src/server.py`).
+   If `models/final` is missing it falls back to the TF-IDF baseline.
+4. Chrome: open `chrome://extensions`, enable Developer mode, **Load unpacked**, choose the `extension/` folder.
+5. Open a product page, refresh it, click the extension icon and switch it on.
+
+How it works: content script reads visible text -> background worker sends it to the local server
+(`127.0.0.1:8000`) -> DistilBERT + regex rules (`src/rules.py`) classify each segment -> flagged text is
+highlighted by category with a tooltip. Nothing leaves the computer. The tool only marks wording that
+*may* be manipulative; it is not a legal verdict.
+
+## Quick start (training pipeline)
 ```bash
 pip install -r requirements.txt
 python src/prepare_data.py --scheme 5   # or --scheme 7

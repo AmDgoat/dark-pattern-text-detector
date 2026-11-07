@@ -4,3 +4,5 @@ torch
 accelerate
 scikit-learn
 numpy
+fastapi
+uvicorn

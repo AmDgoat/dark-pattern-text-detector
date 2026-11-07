@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Store - Dark Pattern Detector test page</title>
+<style>
+  body{font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif;margin:0;background:#f4f5f7;color:#222}
+  header{background:#1f3a5f;color:#fff;padding:14px 24px;font-size:18px;font-weight:600}
+  header small{font-weight:400;opacity:.8;margin-left:12px}
+  .wrap{max-width:900px;margin:20px auto;padding:0 16px}
+  .note{background:#fff8e1;border:1px solid #ffe082;padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:18px}
+  .card{background:#fff;border-radius:10px;padding:18px 20px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .card h2{margin:0 0 10px;font-size:16px;color:#1f3a5f;border-bottom:1px solid #eee;padding-bottom:6px}
+  .price{font-size:22px;font-weight:700}.old{color:#888;text-decoration:line-through;margin:0 8px}.off{color:#2e7d32}
+  .row{margin:6px 0}
+  .btn{display:inline-block;padding:8px 16px;border-radius:6px;border:1px solid #1f3a5f;background:#1f3a5f;color:#fff;margin-right:8px;cursor:pointer}
+  .btn.ghost{background:#fff;color:#777;border-color:#ccc}
+  .timer{font-weight:700;color:#c62828}
+  .review{border-top:1px solid #eee;padding-top:8px;margin-top:8px;color:#444}
+  label{display:block;margin:6px 0}
+</style></head>
+<body>
+<header>Demo Store <small>(fictional test page for the Dark Pattern Detector - not a real shop)</small></header>
+<div class="wrap">
+  <div class="note"><b>How to use:</b> switch the extension on and reload this page. Every highlighted line should be one of the "pattern" sections below. Lines in the "normal text" section should <b>not</b> be highlighted.</div>
+
+  <div class="card"><h2>Product</h2>
+    <div class="row"><b>Wireless Headphones X200 - Bluetooth 5.3, 40 Hour Battery</b></div>
+    <div class="row"><span class="price">Rs. 1,499</span><span class="old">Rs. 2,999</span><span class="off">50% off</span></div>
+    <div class="row"><span class="btn">Add to cart</span><span class="btn ghost">Buy now</span></div>
+  </div>
+
+  <div class="card"><h2>Pattern 1 - Scarcity (false low-stock claims)</h2>
+    <div class="row">Only 2 left in stock</div>
+    <div class="row">Hurry! Only a few left</div>
+    <div class="row">Low stock - selling fast</div>
+  </div>
+
+  <div class="card"><h2>Pattern 2 - Urgency (time pressure)</h2>
+    <div class="row">Flash sale ends in <span class="timer" id="t">02:15:40</span></div>
+    <div class="row">Limited-time offer: today only</div>
+    <div class="row">Deal ends tonight at midnight</div>
+  </div>
+
+  <div class="card"><h2>Pattern 3 - Social proof (popularity claims)</h2>
+    <div class="row">27 people are looking at this right now</div>
+    <div class="row">Rahul from Pune just bought this 5 minutes ago</div>
+    <div class="row">312 sold in the last 24 hours</div>
+  </div>
+
+  <div class="card"><h2>Pattern 4 - Misdirection (confirmshaming)</h2>
+    <div class="row">Get 10% off your first order! Join our newsletter.</div>
+    <div class="row"><span class="btn">Yes, I want to save money</span><span class="btn ghost">No thanks, I don't like saving money</span></div>
+    <div class="row"><span class="btn ghost">No, I prefer paying full price</span></div>
+  </div>
+
+  <div class="card"><h2>Pattern 5 - Other (hidden subscription / forced consent)</h2>
+    <div class="row">Your free trial will auto-renew at Rs. 499 per month unless you cancel.</div>
+    <div class="row">You will be automatically enrolled in our Plus membership and billed monthly.</div>
+    <label><input type="checkbox" checked> I agree to receive marketing emails and promotional offers</label>
+    <label><input type="checkbox" checked> Add shipping insurance for Rs. 49</label>
+  </div>
+
+  <div class="card"><h2>Normal text (should NOT be highlighted)</h2>
+    <div class="row">Showing 1 - 40 of 3,662 results</div>
+    <div class="row">Return within 14 days of receiving your order</div>
+    <div class="row">Cash on delivery available | Free delivery on orders above Rs. 499</div>
+    <div class="row">Boat Rockerz 20000 mAh 22.5 W Slim Power Bank</div>
+    <div class="row">Page 1 of 5</div>
+    <div class="row">Registered office: Demo Store Pvt Ltd, Pune 411007. CIN: U12345MH2020PTC000000</div>
+    <div class="row">This headphone has a soft ear cushion, a built-in microphone and a foldable design. It comes with a charging cable and a one year warranty.</div>
+    <div class="review"><b>Customer review:</b> After using this for two weeks I gave a review. Very good sound quality, worth the money.</div>
+  </div>
+</div>
+<script>
+  // live countdown so you can also see the extension handle changing text
+  var s = 2*3600 + 15*60 + 40, el = document.getElementById("t");
+  setInterval(function(){ s = s > 0 ? s - 1 : 7*3600;
+    var h=("0"+Math.floor(s/3600)).slice(-2), m=("0"+Math.floor(s%3600/60)).slice(-2), c=("0"+s%60).slice(-2);
+    el.textContent = h+":"+m+":"+c; }, 1000);
+</script>
+</body></html>
